@@ -66,18 +66,18 @@ If the Freaky Fungus' HP falls below 50, have it regenerate 1 HP every second.
         - Using up AP with every attack/ button click
     - Fungus losing HP with every attack/ button click, so subtract relevant amount
 
-[]  - Add Functionality to each attack buttons
-[]    - Need to make event listener and handlers for:
+[]  - Add Functionality to each attack button
+[x]    - Need to make event listener and handlers for:
         - Arcane
         - Entangle
         - Dragon Blade
         - Star Fire
-[]  - Event handler functions created for each button
+[x]  - Event handler functions created for each button
         - Event handlers are:
-            - arcaneAttack
-            - entangleAttack
-            - dragonBladeAttack
-            - starFireAttack
+            - arcaneAttackHandler
+            - entangleAttackHandler
+            - dragonBladeAttackHandler
+            - starFireAttackHandler
             - render
                 - will render all states to DOM
         - CSS classes for animations:
@@ -133,11 +133,11 @@ let attacks = [];
 
 
 function onReady() {
-    
+
     // Make sure you check the index.html file! 
     // There are lots of buttons and things ready for you to hook into here!
-    
-    
+
+
     // 🧠 Remember
     // - Handle events that ->
     // - Updates state which is ->
@@ -156,24 +156,38 @@ function onReady() {
 // Event Handlers
 // Function will run arcaneAttackHandler
 function arcaneAttackHandler() {
-console.log("Attacked with Arcane Scepter");
+    console.log("Casted with Arcane Scepter!");
+    
+
+    // - Conditionals -
 
 } // end arcaneAttack
 
 // Function will run entangleAttackHandler
 function entangleAttackHandler() {
-
-
+    console.log("Bound with Entangle!");
+    
+    // - Conditionals -
+    
 } // end entangleAttackHandler
 
 // Function will run dragonBladeAttackHandler
 function dragonBladeAttackHandler() {
-
+    console.log("Sliced with Dragon Blade!");
+    
+    // - Conditionals -
 
 } // end dragonBladeAttackHandler
 
 // Function will run starFireAttackHandler
 function starFireAttackHandler() {
-
+    console.log("Shot with Star Fire!");
+    
+    // - Conditionals -
 
 } // end starFireAttackHandler
+
+// Function will run after each attacks, rendering appends to the DOM
+function render() {
+
+}
