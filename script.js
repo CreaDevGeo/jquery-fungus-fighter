@@ -127,9 +127,39 @@ let fungusHP = 100;
 // Attack points of player
 let playerAP = 100;
 
+// Attack Objects
+let attacks = [{
+    // Arcane Scepter Attack
+    name: "Arcane Scepter",
+    APCost: 12,
+    HPDamage: 14
+},
+// Entangle Attack
+{
+    name: "Entangle",
+    APCost: 23,
+    HPDamage: 9
+},
+// Dragon Blade Attack
+{
+    name: "Dragon Blade",
+    APCost: 38,
+    HPDamage: 47
+},
+// Star Fire Attack
+{
+    name: "Star Fire",
+    APCost: 33,
+    HPDamage: 25
+}
+] // end attacks array
+
+
+// Attack used will be stored here
 // This variable needs to be stored for attack run, dunno if needed but making just in case
 // Will show what attacks depleted and killed all of monster HP(win) or all of AP(lose)
-let attacks = [];
+// Can also be used to loop through and apply damage of attack to monster after click
+let currentRun
 
 
 function onReady() {
@@ -156,25 +186,69 @@ function onReady() {
 // Event Handlers
 // Function will run arcaneAttackHandler
 function arcaneAttackHandler() {
-    console.log("Casted with Arcane Scepter!");
-    
 
-    // - Conditionals -
+    // Loop through attack array to find attack
+    for (attack of attacks) {
+
+        // - Conditionals -
+        // If playAP over is 100 and more than 0, hit Fungus/ subtract HP
+        if (attack.name === "Arcane Scepter" && playerAP == 100 && playerAP > 0) {
+           arcaneAttackHits()
+        }
+        // If playerAP > 0 and >= attack APCost, hit Fungus/ subtract HP
+        else if (attack.name == "Arcane Scepter" && playerAP > 0 && playerAP >= attack.APCost) {
+            // Run function
+            arcaneAttackHits();
+        }
+        else if (attack.name == "Arcane Scepter" && playerAP > 0 && playerAP < attack.APCost) {
+            console.log("\t You missed your attack!! The Fungus lands a fatal blow.")
+            console.log("Now, all of humanity is lost...");
+            
+            // Stop click button
+
+        } // end conditionals
+    } // for of loop
 
 } // end arcaneAttack
+
+// Function that will update state and render
+function arcaneAttackHits() {
+// Attack hits!
+console.log("\n Casted with Arcane Scepter!");
+            
+// Fungus loses 14 health
+fungusHP -= attack.HPDamage;
+console.log("The Freaky Fungus took", attack.HPDamage, "damage!");
+
+// Player losses 12 AP 
+playerAP -= attack.APCost;
+console.log("You lost", attack.APCost, "AP!");
+console.log("Player AP at:", playerAP);
+
+//  Render function
+$(".ap-text").text(`${playerAP} AP`);
+}
 
 // Function will run entangleAttackHandler
 function entangleAttackHandler() {
     console.log("Bound with Entangle!");
-    
+
+    //Fungus Loses HP
+
+    // Player losses AP
+
     // - Conditionals -
-    
+
 } // end entangleAttackHandler
 
 // Function will run dragonBladeAttackHandler
 function dragonBladeAttackHandler() {
     console.log("Sliced with Dragon Blade!");
-    
+
+    //Fungus Loses HP
+
+    // Player losses AP
+
     // - Conditionals -
 
 } // end dragonBladeAttackHandler
@@ -182,7 +256,11 @@ function dragonBladeAttackHandler() {
 // Function will run starFireAttackHandler
 function starFireAttackHandler() {
     console.log("Shot with Star Fire!");
-    
+
+    //Fungus Loses HP
+
+    // Player losses AP 
+
     // - Conditionals -
 
 } // end starFireAttackHandler
