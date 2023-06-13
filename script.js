@@ -98,7 +98,7 @@ If the Freaky Fungus' HP falls below 50, have it regenerate 1 HP every second.
             - AP Cost: 33
             - HP Damage: 25
 []  - Rendering:
-[]      - Update the text above the attack buttons (eg, "100 AP")
+[x]     - Update the text above the attack buttons (eg, "100 AP")
             - Whenever an attack is used
 []      - Update the text above the enemy fungus (eg, "100 HP")
             - Whenever fungus is injured by attack
@@ -155,13 +155,6 @@ let attacks = [{
 ] // end attacks array
 
 
-// Attack used will be stored here
-// This variable needs to be stored for attack run, dunno if needed but making just in case
-// Will show what attacks depleted and killed all of monster HP(win) or all of AP(lose)
-// Can also be used to loop through and apply damage of attack to monster after click
-let currentRun
-
-
 function onReady() {
 
     // Make sure you check the index.html file! 
@@ -193,7 +186,7 @@ function arcaneAttackHandler() {
         // - Conditionals -
         // If playAP over is 100 and more than 0, hit Fungus/ subtract HP
         if (attack.name === "Arcane Scepter" && playerAP == 100 && playerAP > 0) {
-           arcaneAttackHits()
+            arcaneAttackHits();
         }
         // If playerAP > 0 and >= attack APCost, hit Fungus/ subtract HP
         else if (attack.name == "Arcane Scepter" && playerAP > 0 && playerAP >= attack.APCost) {
@@ -201,33 +194,22 @@ function arcaneAttackHandler() {
             arcaneAttackHits();
         }
         else if (attack.name == "Arcane Scepter" && playerAP > 0 && playerAP < attack.APCost) {
-            console.log("\t You missed your attack!! The Fungus lands a fatal blow.")
+            // Loser function run
+            console.log("\n You're out of AP and can't attack or defend yourself!! The Fungus lands a fatal blow.")
             console.log("Now, all of humanity is lost...");
-            
+
             // Stop click button
 
-        } // end conditionals
+        }
+        // If Freaky Fungus HP <= 0, you win!
+        else if (attack.name == "Arcane Scepter" && playerAP > 0 && playerAP >= attack.APCost && fungusHP <= 0) {
+            // Run win function
+            youWin()
+        }
     } // for of loop
 
 } // end arcaneAttack
 
-// Function that will update state and render
-function arcaneAttackHits() {
-// Attack hits!
-console.log("\n Casted with Arcane Scepter!");
-            
-// Fungus loses 14 health
-fungusHP -= attack.HPDamage;
-console.log("The Freaky Fungus took", attack.HPDamage, "damage!");
-
-// Player losses 12 AP 
-playerAP -= attack.APCost;
-console.log("You lost", attack.APCost, "AP!");
-console.log("Player AP at:", playerAP);
-
-//  Render function
-$(".ap-text").text(`${playerAP} AP`);
-}
 
 // Function will run entangleAttackHandler
 function entangleAttackHandler() {
@@ -264,8 +246,58 @@ function starFireAttackHandler() {
     // - Conditionals -
 
 } // end starFireAttackHandler
+// End Event Handlers
 
-// Function will run after each attacks, rendering appends to the DOM
-function render() {
 
-}
+// You Win Function
+// Function to run after monster is slain
+function youWin() {
+    // HP number changed to 0
+    fungusHP = 0; 
+
+    console.log("Your final attack vanquished the freaky Freaky Fungi");
+
+    // Rendering
+    // HP gauge empty
+    
+
+    // stop clicks
+
+} // end youWin
+// End You Win Function
+
+// Hit Functions
+
+// Function that will update state and render to DOM
+function arcaneAttackHits() {
+    // Attack hits!
+    console.log("\n Casted with Arcane Scepter!");
+
+    // Fungus loses 14 health
+    fungusHP -= attack.HPDamage;
+    console.log("The Freaky Fungus took", attack.HPDamage, "damage!");
+    console.log("Fungus health at:", fungusHP);
+
+    // Player losses 12 AP 
+    playerAP -= attack.APCost;
+    console.log("You lost", attack.APCost, "AP!");
+    console.log("Player AP at:", playerAP);
+
+    // Rendering Everything
+
+    // Hit animation
+    // $('.freaky-fungus.walk').addClass('freaky-fungus dead');
+    // $('.freaky-fungus.walk').addClass('freaky-fungus dead');
+    $('.freaky-fungus.walk').addClass('freaky-fungus hurt');
+    $('freaky-fungus.walk.hurt').addClass('walk').delay(1);
+
+
+    // Change AP number and gauge
+    $(".ap-text").text(`${playerAP} AP`);
+
+    // Render attack animation
+
+    // Change HP number and gauge
+    $(".hp-text").text(`${fungusHP} HP`);
+} // end arcaneAttackHits
+    // End Hit Functions
